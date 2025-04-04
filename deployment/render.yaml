@@ -41,8 +41,6 @@ services:
     env: docker
     plan: free
     dockerfilePath: deployment/backend/personalisation_engine/Dockerfile
-    buildCommand: ""
-    startCommand: ""
     autoDeploy: true
     healthCheckPath: /
 
