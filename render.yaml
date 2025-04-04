@@ -4,8 +4,9 @@ services:
     name: api-gateway
     env: docker
     plan: free
-    contextPath: deployment/backend/api_gateway
-    dockerfilePath: Dockerfile
+    dockerfilePath: deployment/backend/api_gateway/Dockerfile
+    buildCommand: ""
+    startCommand: ""
     autoDeploy: true
     healthCheckPath: /
     envVars:
@@ -16,8 +17,9 @@ services:
     name: content-engine
     env: docker
     plan: free
-    contextPath: deployment/backend/content_engine
-    dockerfilePath: Dockerfile
+    dockerfilePath: deployment/backend/content_engine/Dockerfile
+    buildCommand: ""
+    startCommand: ""
     autoDeploy: true
     healthCheckPath: /
     envVars:
@@ -28,8 +30,9 @@ services:
     name: learner-data-tracker
     env: docker
     plan: free
-    contextPath: deployment/backend/learner_data_tracker
-    dockerfilePath: Dockerfile
+    dockerfilePath: deployment/backend/learner_data_tracker/Dockerfile
+    buildCommand: ""
+    startCommand: ""
     autoDeploy: true
     healthCheckPath: /
 
@@ -37,8 +40,9 @@ services:
     name: personalisation-engine
     env: docker
     plan: free
-    contextPath: deployment/backend/personalisation_engine
-    dockerfilePath: Dockerfile
+    dockerfilePath: deployment/backend/personalisation_engine/Dockerfile
+    buildCommand: ""
+    startCommand: ""
     autoDeploy: true
     healthCheckPath: /
 
@@ -46,7 +50,8 @@ services:
     name: adaptive-learning-ui
     env: docker
     plan: free
-    contextPath: deployment/frontend
-    dockerfilePath: Dockerfile
+    dockerfilePath: deployment/frontend/Dockerfile
+    buildCommand: ""
+    startCommand: ""
     autoDeploy: true
     healthCheckPath: /
