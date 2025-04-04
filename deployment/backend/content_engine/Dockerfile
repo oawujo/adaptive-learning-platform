@@ -1,11 +1,6 @@
 FROM python:3.10-slim
 WORKDIR /app
-# Copy the requirements file into the container
-COPY requirements.txt .
-
-# Install dependencies
+COPY deployment/backend/content_engine/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy the rest of the application code
-COPY . .
+COPY deployment/backend/content_engine/ .
 CMD ["python", "app.py"]
