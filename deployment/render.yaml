@@ -1,0 +1,57 @@
+
+services:
+  - type: web
+    name: api-gateway
+    env: docker
+    plan: free
+    dockerfilePath: deployment/backend/api_gateway/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+
+  - type: web
+    name: content-engine
+    env: docker
+    plan: free
+    dockerfilePath: deployment/backend/content_engine/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+
+  - type: web
+    name: learner-data-tracker
+    env: docker
+    plan: free
+    dockerfilePath: deployment/backend/learner_data_tracker/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    autoDeploy: true
+    healthCheckPath: /
+
+  - type: web
+    name: personalisation-engine
+    env: docker
+    plan: free
+    dockerfilePath: deployment/backend/personalisation_engine/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    autoDeploy: true
+    healthCheckPath: /
+
+  - type: web
+    name: adaptive-learning-ui
+    env: docker
+    plan: free
+    dockerfilePath: deployment/frontend/Dockerfile
+    buildCommand: ""
+    startCommand: ""
+    autoDeploy: true
+    healthCheckPath: /
