@@ -6,6 +6,13 @@ RUN npm install && npm run build
 
 # Serve the built frontend
 FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copy the requirements file into the container
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code
+COPY . .
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
