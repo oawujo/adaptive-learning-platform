@@ -16,7 +16,7 @@ export default function LearningLogger() {
   const [response, setResponse] = useState(null);
   const [generatedContent, setGeneratedContent] = useState("");
 
-  const API_BASE = "http://localhost:8000";
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
