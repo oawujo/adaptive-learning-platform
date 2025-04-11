@@ -27,7 +27,11 @@ export default function LearnerDashboard({ userId }) {
 
     const fetchRecommendation = async () => {
       try {
-        const res = await fetch(`${API_BASE}/recommend?user_id=${userId}`);
+        const res = await fetch(`${API_BASE}/recommend`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ user_id: userId }),
+        });
         if (!res.ok) {
           const text = await res.text();
           throw new Error(`Recommendation fetch failed: ${res.status} - ${text}`);
@@ -82,3 +86,4 @@ export default function LearnerDashboard({ userId }) {
     </div>
   );
 }
+
