@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 
 export default function LearningLogger() {
@@ -15,6 +14,7 @@ export default function LearningLogger() {
 
   const [response, setResponse] = useState(null);
   const [generatedContent, setGeneratedContent] = useState("");
+  const [error, setError] = useState("");
 
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -27,6 +27,7 @@ export default function LearningLogger() {
     e.preventDefault();
     console.log("Submitting form:", formData);
 
+    setError("");
     try {
       const logRes = await fetch(`${API_BASE}/log`, {
         method: "POST",
@@ -34,11 +35,17 @@ export default function LearningLogger() {
         body: JSON.stringify(formData),
       });
 
+      if (!logRes.ok) {
+        const text = await logRes.text();
+        throw new Error(`Log error: ${logRes.status} - ${text}`);
+      }
+
       const logData = await logRes.json();
       console.log("Log response:", logData);
       setResponse(logData);
     } catch (err) {
       console.error("Failed to log data:", err);
+      setError(`Logging failed: ${err.message}`);
     }
 
     try {
@@ -48,11 +55,17 @@ export default function LearningLogger() {
         body: JSON.stringify(formData),
       });
 
+      if (!genRes.ok) {
+        const text = await genRes.text();
+        throw new Error(`Content error: ${genRes.status} - ${text}`);
+      }
+
       const genData = await genRes.json();
       console.log("Generated content:", genData);
       setGeneratedContent(genData.generated_content);
     } catch (err) {
       console.error("Failed to fetch content:", err);
+      setError(`Content fetch failed: ${err.message}`);
     }
   };
 
@@ -91,6 +104,12 @@ export default function LearningLogger() {
       {response?.logged?.timestamp && (
         <div style={{ marginTop: "1rem", color: "green" }}>
           ✅ Action logged at {response.logged.timestamp}
+        </div>
+      )}
+
+      {error && (
+        <div style={{ marginTop: "1rem", color: "red" }}>
+          ❌ {error}
         </div>
       )}
 
