@@ -1,21 +1,23 @@
 
 from fastapi import FastAPI, Request
-import httpx
 from fastapi.middleware.cors import CORSMiddleware
+import httpx
+import os
 
 app = FastAPI()
 
-CONTENT_ENGINE_URL = "http://content_engine:8003"
-LEARNER_DATA_TRACKER_URL = "http://learner_data_tracker:8001"
-PERSONALISATION_ENGINE_URL = "http://personalisation_engine:8002"
+CONTENT_ENGINE_URL = "https://content-engine-6gzt.onrender.com"
+LEARNER_DATA_TRACKER_URL = "https://learner-data-tracker-6gzt.onrender.com"
+PERSONALISATION_ENGINE_URL = "https://personalisation-engine-6gzt.onrender.com"
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["https://adaptive-learning-ui-6gzt.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 @app.post("/log")
 async def log_learner_action(request: Request):
