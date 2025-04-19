@@ -69,7 +69,7 @@ PERSONALISATION_ENGINE_URL = os.getenv("PERSONALISATION_ENGINE_URL", "https://pe
 # CORS: Allow only the deployed frontend (adjust as needed)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://adaptive-learning-ui.onrender.com"],
+    allow_origins=["https://adaptive-learning-ui-6gzt.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
