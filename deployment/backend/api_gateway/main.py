@@ -53,6 +53,7 @@
 # @app.get("/")
 # async def root():
 #     return {"message": "API Gateway is running"}
+#
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
