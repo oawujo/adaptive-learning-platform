@@ -7,7 +7,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-# Initialize DB
+# Initialize DB#
 def init_db():
     conn = sqlite3.connect("learner_logs.db")
     cursor = conn.cursor()
