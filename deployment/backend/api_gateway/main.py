@@ -54,6 +54,8 @@
 # async def root():
 #     return {"message": "API Gateway is running"}
 #
+#########################################################
+#
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import httpx
@@ -61,19 +63,23 @@ import os
 
 app = FastAPI()
 
-# Load external service URLs from environment variables (for deployment flexibility)
+# ✅ Update these URLs with your Render backend endpoints
 CONTENT_ENGINE_URL = os.getenv("CONTENT_ENGINE_URL", "https://content-engine-6gzt.onrender.com")
 LEARNER_DATA_TRACKER_URL = os.getenv("LEARNER_DATA_TRACKER_URL", "https://learner-data-tracker-6gzt.onrender.com")
 PERSONALISATION_ENGINE_URL = os.getenv("PERSONALISATION_ENGINE_URL", "https://personalisation-engine-6gzt.onrender.com")
 
-# CORS: Allow only the deployed frontend (adjust as needed)
+# ✅ CORS config for your deployed frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://adaptive-learning-ui-6gzt.onrender.com"],#["https://adaptive-learning-ui-6gzt.onrender.com/log"],
+    allow_origins=["https://adaptive-learning-ui-6gzt.onrender.com"],  # exact frontend origin
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+async def root():
+    return {"message": "API Gateway is running"}
 
 @app.post("/log")
 async def log_learner_action(request: Request):
@@ -97,15 +103,11 @@ async def generate_content(request: Request):
     try:
         return res.json()
     except Exception as e:
-        print("🔁 Content engine returned non-JSON:", await res.aread())
-        return {"error": "Failed to parse content engine response"}, res.status_code
+        print("❌ Error parsing content engine response:", await res.aread())
+        return {"error": "Failed to parse content"}, res.status_code
 
 @app.get("/history")
 async def get_history(user_id: str):
     async with httpx.AsyncClient() as client:
         res = await client.get(f"{LEARNER_DATA_TRACKER_URL}/history?user_id={user_id}")
     return res.json()
-
-@app.get("/")
-async def root():
-    return {"message": "API Gateway is live and responding"}
